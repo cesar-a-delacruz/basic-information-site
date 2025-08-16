@@ -1,20 +1,26 @@
-import http from "http";
-import fs from "fs";
+import express from "express";
+import path from "path";
 
-const server = http.createServer();
-server.on("request", (req, res) => {
-  if (req.url === "/") {
-    res.writeHead(200, { "Content-Type": "text/html" });
-    res.end(fs.readFileSync("index.html"));
-  } else if (req.url === "/about") {
-    res.writeHead(200, { "Content-Type": "text/html" });
-    res.end(fs.readFileSync("./about.html"));
-  } else if (req.url === "/contact-me") {
-    res.writeHead(200, { "Content-Type": "text/html" });
-    res.end(fs.readFileSync("./contact-me.html"));
-  } else {
-    res.writeHead(404, { "Content-Type": "text/html" });
-    res.end(fs.readFileSync("./404.html"));
-  }
+const app = express();
+
+app.listen(8080, (error) => {
+  if (error) throw error;
+  console.log("running...");
 });
-server.listen(8080);
+
+const options = { root: path.dirname(".") };
+
+app.get("/", (req, res) => {
+  res.status(200).sendFile("./index.html", options);
+});
+app.get("/about", (req, res) => {
+  res.status(200).sendFile("./about.html", options);
+});
+app.get("/contact-me", (req, res) => {
+  res.status(200).sendFile("./contact-me.html", options);
+});
+
+app.use((req, res) => {
+  res.status(404).sendFile("./404.html", options);
+});
+
