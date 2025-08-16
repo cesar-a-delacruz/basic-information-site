@@ -1,0 +1,11 @@
+<%- include('templates/header') %>
+<main>
+  <form action="mailto:you@example.com" method="post" enctype="text/plain">
+    <label for="name">Name:</label><br />
+    <input type="text" id="name" name="name" /><br /><br />
+    <label for="message">Message:</label><br />
+    <textarea id="message" name="message"></textarea><br /><br />
+    <input type="submit" value="Send" />
+  </form>
+</main>
+<%- include('templates/footer') %>
